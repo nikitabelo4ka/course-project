@@ -1,0 +1,29 @@
+.tag {
+    border: 1px solid rgba(128, 128, 128, 0.263);
+    border-radius: 8px;
+    display: inline-flex;
+    padding: 0.5vw;
+    margin: 1vw 0.5vw 0.5vw 0.5vw;
+    font-size: 1vw;
+}
+
+.tag:hover {
+    cursor: pointer;
+    background-color: rgba(128, 128, 128, 0.448);
+}
+
+.limit-input {
+    width: 10vw;
+    height: 2vw;
+    font-size: 1vw;
+}
+
+.limit-input:focus {
+    outline: none;
+}
+
+.get-latest-items-btn {
+    margin: 0 0 0 1vw;
+    vertical-align:top;
+    height: 2.1vw;
+}
