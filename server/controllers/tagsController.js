@@ -1,5 +1,6 @@
 const {Tag, ItemTag} = require("../models/models");
 const apiError = require("../error/apiError");
+const sequelize = require('../db')
 
 class tagsController {
 
@@ -29,6 +30,21 @@ class tagsController {
             next(apiError.badrequest(error.message));
         }
 
+    }
+
+    async getPopular(request, response) {
+
+        let limit = 40;
+
+        const tagsCount = await ItemTag.findAll({
+            attributes: ['tagId', [sequelize.fn('COUNT', sequelize.col('id')), 'tagCount']],
+            group: ['tagId'],
+            order: [['tagCount', 'DESC']],
+            limit,
+        });
+        const tagsId = tagsCount.map((tag) => tag.tagId);
+        const tags = await Tag.findAll({where: {id: tagsId}});
+        return response.json({tagsCount, tags});
     }
 }
 

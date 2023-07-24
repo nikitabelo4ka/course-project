@@ -1,4 +1,4 @@
-const {Collection} = require("../models/models");
+const {Collection, Item} = require("../models/models");
 const apiError = require("../error/apiError");
 
 class collectionController {
@@ -70,6 +70,7 @@ class collectionController {
 
         try {         
             let {id} = request.query;
+            const item = await Item.destroy({where: {collectionId: id}});  
             const collection = await Collection.destroy({where:{id}});    
             return response.json(collection);
         } catch (error) {

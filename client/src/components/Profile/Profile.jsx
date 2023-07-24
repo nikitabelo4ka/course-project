@@ -1,13 +1,13 @@
 import {React, useContext, useEffect, useState} from "react";
+import {fetchAllUserCollections} from "../../http/collectionAPI";
+import {Context} from "../../index";
+import {observer} from 'mobx-react';
+import Collection from "../Collection";
+import NewCollectionModal from "../../modals/NewCollectionModal";
 import Button from "react-bootstrap/Button";
 import {Container, Row} from "react-bootstrap";
 import jwtDecode from 'jwt-decode';
-import {fetchAllUserCollections} from "../http/collectionAPI";
-import {Context} from "../index";
-import {observer} from 'mobx-react';
-import Collection from "./Collection";
-import NewCollectionModal from "../modals/NewCollectionModal";
-import '../styles/profile.css';
+import './profile.css';
 
 const Profile = observer(() => {
 
@@ -22,12 +22,12 @@ const Profile = observer(() => {
     }, [modalVisisble, token.id]);
 
     return (
-        <Container className="d-flex profile-container">
-            <h1 style={{textAlign: "center", marginTop: "60px"}}>{token.firstName}'s collections</h1>
+        <Container className="d-flex flex-column">
+            <h1 className="profile-label">{token.firstName}'s collections</h1>
             <Button className="btn btn-outline-dark add-collection-btn" onClick={() => setModalVisible(true)}>Create new collection</Button>
             <Row className="collections-wrapper">
                 {collection.userCollections.map((collection) => 
-                    <Collection key={collection.id} collection={collection}/>
+                    <Collection key={collection.id} item={collection}/>
                 )}
             </Row>
             <NewCollectionModal show={modalVisisble} onHide={() => setModalVisible(false)}/>

@@ -2,6 +2,10 @@
     background-color: white;
     margin: 1vw auto;
     width: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1vw;
 }
 
 .add-collection-btn:focus {
@@ -83,24 +87,18 @@
     background-color: white;
 }
 
-.profile-container {
-    flex-direction: column;
-}
-
 .collections-wrapper {
     margin-top: 2vw;
+    display: flex;
+    justify-content: center;
 }
 
 .collection-modal-input, .file-input {
     margin-bottom: 1vw;
 }
 
-.none {
-    display: none;
-}
-
 .collection-custom-field-input {
-    width: 8vw;
+    width: 100%;
 }
 
 .collection-custom-field-input {
@@ -160,4 +158,119 @@
 
 .ReactTags__remove:hover {
     background-color: #e4e4e4;
+}
+
+.profile-label {
+    text-align: center;
+    font-size: 2vw;
+    margin-top: 60px;
+}
+
+@media screen and (max-width: 855px) {
+    
+    .collection-item-name, .add-collection-btn {
+        font-size: 1.5vw;
+    }
+
+    .collection-item-image {
+        width: 15.89vw;
+        height: 14vw;
+    }
+
+    .collection-item, .collection-item-shadow {
+        width: 17vw;
+    }
+
+    .collection-item-shadow {
+        height: 19.5vw;
+    }
+
+    .collection-item-shadow-button {
+        width: 5vw;
+        height: 3vw;
+    }
+
+    .add-collection-btn {
+        width: 20vw;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    
+    .collection-item-name, .collection-item-shadow-button {
+        font-size: 2vw;
+    }
+
+    .collection-item-image {
+        width: 20.89vw;
+        height: 20vw;
+    }
+
+    .collection-item, .collection-item-shadow {
+        width: 22vw;
+    }
+
+    .collection-item-shadow {
+        height: 26.9vw;
+    }
+
+    .collection-item-shadow-button {
+        width: 8vw;
+        height: 4vw;
+    }
+
+    .collection-item-shadow-buttons {
+        width: 3vw;
+        height: 2vw;
+    }
+
+    .collection-item:hover .collection-item-shadow-buttons {
+        top: 30%;
+        left: 32%;
+    }
+
+    .profile-label {
+        font-size: 3vw;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .profile-label {
+        font-size: 5vw;
+    }
+    
+    .collection-item-name {
+        font-size: 3.5vw;
+    }
+
+    .collection-item-image {
+        width: 26.89vw;
+        height: 26vw;
+    }
+
+    .collection-item {
+        width: 28vw;
+    }
+
+    .collection-item-shadow {
+        width: 28vw;
+        height: 35.9vw;
+    }
+
+    .collection-item-shadow-button {
+        width: 12vw;
+        height: 6vw;
+        font-size: 3vw;
+    }
+
+    .collection-item:hover .collection-item-shadow-buttons {
+        top: 28%;
+        left: 28%;
+    }
+
+    .add-collection-btn {
+        width: 20vw;
+        font-size: 2.5vw;
+    }
 }

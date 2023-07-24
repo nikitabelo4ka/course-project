@@ -138,7 +138,8 @@ const NewCollectionModal = ({show, onHide, userId, info, isModify}) => {
         });
     }, [collection, isModify, show]);
 
-    const addCollection = () => {
+    const addCollection = (e) => {
+        e.preventDefault();
         if(isModify) {
             modifyCollection(info.id, name, theme === "Other" ? otherTheme : theme, images, description, JSON.stringify([...Object.values(customFieldsValue.integer), ...Object.values(customFieldsValue.text), ...Object.values(customFieldsValue.string), ...Object.values(customFieldsValue.date), ...Object.values(customFieldsValue.bool)])).then((data) => onHide());
         } else {
@@ -178,19 +179,19 @@ const NewCollectionModal = ({show, onHide, userId, info, isModify}) => {
                     {isModify ? "Modify a collection" : "Add a collection"}
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <Form className="d-flex flex-column">
+            <Form className="d-flex flex-column" onSubmit={addCollection}>
+                <Modal.Body>
                     <Form.Label>Collection name</Form.Label>
-                    <Form.Control className="collection-modal-input" value={name} onChange={e => setName(e.target.value)} placeholder={"Name..."}/>
+                    <Form.Control className="collection-modal-input" value={name} onChange={e => setName(e.target.value)} placeholder={"Name..."} required/>
                     <Form.Label>Collection theme</Form.Label>
-                    <select value={theme} onChange={e => setTheme(e.target.value)} className="form-select collection-modal-input" aria-label="Default select example">
+                    <select value={theme} onChange={e => setTheme(e.target.value)} className="form-select collection-modal-input" aria-label="Default select example" required>
                         {collectionThemes.map((theme) =>
                             <option key={theme}>{theme}</option>
                         )}
                     </select>
-                    <Form.Control className={theme === 'Other' ? "collection-modal-input" : "none"} value={otherTheme} onChange={(e) => setOtherTheme(e.target.value)} placeholder={"Other theme..."} required/>
+                    <Form.Control className={theme === 'Other' ? "collection-modal-input" : "none"} value={otherTheme} onChange={(e) => setOtherTheme(e.target.value)} placeholder={"Other theme..."}/>
                     <Form.Label>Collection description</Form.Label>
-                    <Form.Control className="collection-modal-input" value={description} onChange={e => setDescription(e.target.value)} placeholder={"Description..."} as="textarea"/>
+                    <Form.Control className="collection-modal-input" value={description} onChange={e => setDescription(e.target.value)} placeholder={"Description..."} as="textarea" required/>
                     <Form.Label>Collection image</Form.Label>
                     <IKContext publicKey={process.env.REACT_APP_PUBLIC_KEY} urlEndpoint={process.env.REACT_APP_URL_ENDPOINT} authenticationEndpoint={process.env.REACT_APP_AUTHENTIFICATION_ENDPOINT}>
                         <IKUpload className="file-input" onError={onError} onSuccess={onSuccess}/> 
@@ -202,15 +203,15 @@ const NewCollectionModal = ({show, onHide, userId, info, isModify}) => {
                         <div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.integer.first} onChange={(e) => checkboxValueChange(e, 'integer', 'first')} label="1" id="collection-field-1" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.integer.first} disabled={isCheckboxChecked.integer.first ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, integer: {...state.integer, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.integer.first} required={isCheckboxChecked.integer.first ? "required" : "no"} disabled={isCheckboxChecked.integer.first ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, integer: {...state.integer, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.integer.second} onChange={(e) => checkboxValueChange(e, 'integer', 'second')} label="2" id="collection-field-2" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.integer.second} disabled={isCheckboxChecked.integer.second ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, integer: {...state.integer, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.integer.second} required={isCheckboxChecked.integer.second ? "required" : "no"} disabled={isCheckboxChecked.integer.second ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, integer: {...state.integer, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.integer.third} onChange={(e) => checkboxValueChange(e, 'integer', 'third')} label="3" id="collection-field-3" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.integer.third} disabled={isCheckboxChecked.integer.third ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, integer: {...state.integer, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.integer.third} required={isCheckboxChecked.integer.third ? "required" : "no"} disabled={isCheckboxChecked.integer.third ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, integer: {...state.integer, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                         </div>
                     </div>
@@ -220,15 +221,15 @@ const NewCollectionModal = ({show, onHide, userId, info, isModify}) => {
                         <div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.text.first} onChange={(e) => checkboxValueChange(e, 'text', 'first')} label="1" id="collection-field-1" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.text.first} disabled={isCheckboxChecked.text.first ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, text: {...state.text, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.text.first} required={isCheckboxChecked.text.first ? "required" : "no"} disabled={isCheckboxChecked.text.first ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, text: {...state.text, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.text.second} onChange={(e) => checkboxValueChange(e, 'text', 'second')} label="2" id="collection-field-2" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.text.second} disabled={isCheckboxChecked.text.second ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, text: {...state.text, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.text.second} required={isCheckboxChecked.text.second ? "required" : "no"} disabled={isCheckboxChecked.text.second ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, text: {...state.text, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.text.third} onChange={(e) => checkboxValueChange(e, 'text', 'third')} label="3" id="collection-field-3" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.text.third} disabled={isCheckboxChecked.text.third ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, text: {...state.text, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.text.third} required={isCheckboxChecked.text.third ? "required" : "no"} disabled={isCheckboxChecked.text.third ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, text: {...state.text, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                         </div>
                     </div>
@@ -238,15 +239,15 @@ const NewCollectionModal = ({show, onHide, userId, info, isModify}) => {
                         <div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.string.first} onChange={(e) => checkboxValueChange(e, 'string', 'first')} label="1" id="collection-field-1" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.string.first} disabled={isCheckboxChecked.string.first ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, string: {...state.string, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.string.first} required={isCheckboxChecked.string.first ? "required" : "no"} disabled={isCheckboxChecked.string.first ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, string: {...state.string, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.string.second} onChange={(e) => checkboxValueChange(e, 'string', 'second')} label="2" id="collection-field-2" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.string.second} disabled={isCheckboxChecked.string.second ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, string: {...state.string, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.string.second} required={isCheckboxChecked.string.second ? "required" : "no"} disabled={isCheckboxChecked.string.second ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, string: {...state.string, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.string.third} onChange={(e) => checkboxValueChange(e, 'string', 'third')} label="3" id="collection-field-3" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.string.third} disabled={isCheckboxChecked.string.third ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, string: {...state.string, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.string.third} required={isCheckboxChecked.string.third ? "required" : "no"} disabled={isCheckboxChecked.string.third ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, string: {...state.string, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                         </div>
                     </div>
@@ -256,15 +257,15 @@ const NewCollectionModal = ({show, onHide, userId, info, isModify}) => {
                         <div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.date.first} onChange={(e) => checkboxValueChange(e, 'date', 'first')} label="1" id="collection-field-1" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.date.first} disabled={isCheckboxChecked.date.first ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, date: {...state.date, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.date.first} required={isCheckboxChecked.date.first ? "required" : "no"} disabled={isCheckboxChecked.date.first ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, date: {...state.date, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.date.second} onChange={(e) => checkboxValueChange(e, 'date', 'second')} label="2" id="collection-field-2" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.date.second} disabled={isCheckboxChecked.date.second ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, date: {...state.date, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.date.second} required={isCheckboxChecked.date.second ? "required" : "no"} disabled={isCheckboxChecked.date.second ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, date: {...state.date, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.date.third} onChange={(e) => checkboxValueChange(e, 'date', 'third')} label="3" id="collection-field-3" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.date.third} disabled={isCheckboxChecked.date.third ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, date: {...state.date, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.date.third} required={isCheckboxChecked.date.third ? "required" : "no"} disabled={isCheckboxChecked.date.third ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, date: {...state.date, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                         </div>
                     </div>
@@ -274,24 +275,24 @@ const NewCollectionModal = ({show, onHide, userId, info, isModify}) => {
                         <div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.bool.first} onChange={(e) => checkboxValueChange(e, 'bool', 'first')} label="1" id="collection-field-1" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.bool.first} disabled={isCheckboxChecked.bool.first ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, bool: {...state.bool, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.bool.first} required={isCheckboxChecked.bool.first ? "required" : "no"} disabled={isCheckboxChecked.bool.first ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, bool: {...state.bool, first: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.bool.second} onChange={(e) => checkboxValueChange(e, 'bool', 'second')} label="2" id="collection-field-2" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.bool.second} disabled={isCheckboxChecked.bool.second ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, bool: {...state.bool, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.bool.second} required={isCheckboxChecked.bool.second ? "required" : "no"} disabled={isCheckboxChecked.bool.second ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, bool: {...state.bool, second: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                             <div className="collection-field-input-wrapper">
                                 <Form.Check checked={isCheckboxChecked.bool.third} onChange={(e) => checkboxValueChange(e, 'bool', 'third')} label="3" id="collection-field-3" className="collection-checkbox"/>
-                                <Form.Control value={customFieldsValue.bool.third} disabled={isCheckboxChecked.bool.third ? "" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, bool: {...state.bool, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
+                                <Form.Control value={customFieldsValue.bool.third} required={isCheckboxChecked.bool.third ? "required" : "no"} disabled={isCheckboxChecked.bool.third ? "no" : "disabled"} onChange={(e) => setCustomFieldsValue((state) => ({...state, bool: {...state.bool, third: e.target.value}}))} className="collection-custom-field-input" placeholder="Field name"/>
                             </div>
                         </div>
                     </div>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="outline-danger" onClick={onHide}>Close</Button>
-                <Button variant="outline-success" onClick={addCollection}>{isModify ? "Save" : "Add"}</Button>
-            </Modal.Footer>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-danger" onClick={onHide}>Close</Button>
+                    <Button variant="outline-success" type="submit">{isModify ? "Save" : "Add"}</Button>
+                </Modal.Footer>
+            </Form>
         </Modal>
     );
 };

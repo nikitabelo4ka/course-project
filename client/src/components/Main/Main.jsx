@@ -1,22 +1,22 @@
 import {React, useContext, useEffect, useState} from "react";
-import { fetchTags } from "../http/tagsAPI";
-import { fetchAllItems, fetchLatestItems } from "../http/collectionItemAPI";
-import { fetchOneCollection, fetchCollections } from "../http/collectionAPI";
 import {useNavigate} from "react-router-dom";
-import {Context} from "../index";
+import { fetchAllItems, fetchLatestItems } from "../../http/collectionItemAPI";
+import { fetchOneCollection, fetchCollections } from "../../http/collectionAPI";
+import Collection from "../Collection";
+import {COLLECTION_ITEM_ROUTE} from "../../utils/consts";
+import {Context} from "../../index";
 import {observer} from 'mobx-react';
 import {Container} from "react-bootstrap";
-import Collection from "./Collection";
-import {COLLECTION_ITEM_ROUTE} from "../utils/consts";
-import "../styles/main.css";
+import Button from 'react-bootstrap/Button';
+import TagsCloud from "../TagsCloud";
+import "./main.css";
 
 const Main = observer(() => {
 
-    const {tag} = useContext(Context);
+    const {collection} = useContext(Context);
     const history = useNavigate();
 
     const [resultCollections, setResultCollections] = useState([]);
-    const [collections, setCollections] = useState([]);
     const [limit, setLimit] = useState(0);
     const [latestItems, setLatestItems] = useState([]);
 
@@ -30,14 +30,13 @@ const Main = observer(() => {
     const getLatestItems = () => {
         fetchLatestItems(limit).then((data) => {
             setLatestItems(data);
-        })
+        });
     };
 
     useEffect(() => {
-        fetchTags().then((data) => tag.setTags(data));
         fetchAllItems().then((data) => {
             Object.entries(groupBy(data, "collectionId")).sort(function(a,b) {return b[1].length - a[1].length}).forEach((item, index) => {
-                if (index < 5) {
+                if (item[0] && index < 5) {
                     fetchOneCollection(item[0]).then((data) => {
                         setResultCollections((state) => ([...state, data]));
                     });
@@ -45,41 +44,37 @@ const Main = observer(() => {
             })
         });
         fetchCollections().then((data) => {
-            setCollections(data);
+            collection.setCollections(data);
         });
-
-    }, [tag]);
-
-    console.log(resultCollections)
+    }, [collection]);
 
     return (
         <Container>
-                <h1 style={{textAlign: "center", marginTop: "2vw"}}>#Tags</h1>
-                {tag.tags.map((item) =>
-                    <p key={item.id} className="tag">{item.text}</p>
-                )}
-                <h1 style={{textAlign: "center", marginTop: "2vw"}}>All collections</h1>
-                <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between"}}>
-                    {collections.map((item) => 
-                        <Collection collection={item} key={item.id}/>
+                <TagsCloud />
+                <h1>All collections</h1>
+                <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
+                    {collection.collections.map((item) => 
+                        <Collection item={item} key={item.id}/>
                     )}
                 </div>
                 <div style={{marginBottom: "5vw"}}>
                     <div>
-                        <h1 style={{textAlign: "center", marginTop: "2vw"}}>Latest items</h1>
-                        <input className="limit-input" value={limit} onChange={(e) => setLimit(e.target.value)} type="number"/>
-                        <button type="button" className="btn btn-warning get-latest-items-btn" onClick={getLatestItems}>Get</button>
+                        <h1>Latest items</h1>
+                        <div className="d-flex align-items-center">
+                            <input className="limit-input" value={limit} onChange={(e) => setLimit(e.target.value)} type="number"/>
+                            <Button variant="warning" className="get-latest-items-btn" onClick={getLatestItems}>Get</Button>
+                        </div>
                     </div>
-                    {latestItems === [] ? <h3 style={{textAlign: "center", marginTop: "2vw"}}>Enter the desired number of items and click get</h3> :
-                        <table className="table table-striped" style={{border: "1px solid black", margin: "100px auto 0"}}>
-                            <thead className="thead-dark">
+                    {latestItems === [] ? <h1>Enter the desired number of items and click get</h1> :
+                        <table className="table table-striped main-table">
+                            <thead className="thead-dark main-table-head">
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Collection</th>
                                     <th scope="col">Author</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="thead-dark main-table-body">
                                 {latestItems.map((item) => 
                                     <tr key={item.id} onClick={() => history(COLLECTION_ITEM_ROUTE + '/' + item.id)} style={{cursor: "pointer"}}>
                                         <th scope="row">{item.name}</th>
@@ -91,10 +86,10 @@ const Main = observer(() => {
                         </table>
                     }
                 </div>
-                <h1 style={{textAlign: "center", marginTop: "2vw"}}>Five biggest collections</h1>
-                <div style={{display: "flex", flexWrap: "wrap"}}>
+                <h1>Five biggest collections</h1>
+                <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
                     {resultCollections.map((item) => 
-                        <Collection collection={item} key={item.id}/>
+                        <Collection item={item} key={item.id}/>
                     )}
                 </div>
         </Container>

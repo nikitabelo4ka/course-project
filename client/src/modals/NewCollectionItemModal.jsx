@@ -68,7 +68,8 @@ const NewCollectionItemModal = ({show, onHide, collectionId, isModify, collectio
         onHide();
     };
 
-    const addCollection = () => {
+    const addCollection = (e) => {
+        e.preventDefault();
         if(isModify) {
             modifyCollectionItem(collectionItemId, name, JSON.stringify(tags), JSON.stringify([...Object.values(customFieldsValue.integer), ...Object.values(customFieldsValue.text), ...Object.values(customFieldsValue.string), ...Object.values(customFieldsValue.date), ...Object.values(customFieldsValue.bool)])).then((data) => {
                 onHide();
@@ -128,46 +129,48 @@ const NewCollectionItemModal = ({show, onHide, collectionId, isModify, collectio
                     {isModify ? "Modify a collection item" : "Add new collection item"}
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <Form.Label>Collection item name</Form.Label>
-                <Form.Control className="collection-modal-input" value={name} onChange={e => setName(e.target.value)} placeholder={"Name..."}/>
-                <Form.Label>Collection item tags</Form.Label>
-                <TagsInput value={tags} onChange={setTags} name="tags" classNames={"tags-items"} placeHolder="Please press enter to add a tag"/>
-                {integerNames.map((item) => 
-                    <div key={item}>
-                        <Form.Label>{item[1]}</Form.Label>
-                        <Form.Control value={customFieldsValue.integer[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, integer: {...state.integer, [item[0]]: e.target.value}}))} type="number" className="collection-modal-input"/>
-                    </div>
-                )}
-                {textNames.map((item) => 
-                    <div key={item}>
-                        <Form.Label>{item[1]}</Form.Label>
-                        <Form.Control value={customFieldsValue.text[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, text: {...state.text, [item[0]]: e.target.value}}))} type="text" className="collection-modal-input"/>
-                    </div>
-                )}
-                {stringNames.map((item) => 
-                    <div key={item}>
-                        <Form.Label>{item[1]}</Form.Label>
-                        <Form.Control value={customFieldsValue.string[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, string: {...state.string, [item[0]]: e.target.value}}))} as='textarea' className="collection-modal-input"/>
-                    </div>
-                )}
-                {dateNames.map((item) => 
-                    <div key={item}>
-                        <Form.Label>{item[1]}</Form.Label>
-                        <Form.Control value={customFieldsValue.date[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, date: {...state.date, [item[0]]: e.target.value}}))} type="date" className="collection-modal-input"/>
-                    </div>
-                )}
-                {boolNames.map((item) => 
-                    <div key={item} className="d-flex">
-                        <Form.Label>{item[1]}</Form.Label>
-                        <Form.Check checked={customFieldsValue.bool[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, bool: {...state.bool, [item[0]]: e.target.checked}}))} type="switch" style={{marginLeft: "0.6vw", marginTop: "0.1vw"}}/>
-                    </div>
-                )}
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="outline-danger" onClick={closeModal}>Close</Button>
-                <Button variant="outline-success" onClick={addCollection}> {isModify ? "Save" : "Add"}</Button>
-            </Modal.Footer>
+            <Form onSubmit={addCollection}>
+                <Modal.Body>
+                    <Form.Label>Collection item name</Form.Label>
+                    <Form.Control className="collection-modal-input" value={name} onChange={e => setName(e.target.value)} placeholder={"Name..."} required/>
+                    <Form.Label>Collection item tags</Form.Label>
+                    <TagsInput value={tags} onChange={setTags} name="tags" classNames={"tags-items"} placeHolder="Please press enter to add a tag"/>
+                    {integerNames.map((item) => 
+                        <div key={item}>
+                            <Form.Label>{item[1]}</Form.Label>
+                            <Form.Control value={customFieldsValue.integer[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, integer: {...state.integer, [item[0]]: e.target.value}}))} type="number" className="collection-modal-input" required/>
+                        </div>
+                    )}
+                    {textNames.map((item) => 
+                        <div key={item}>
+                            <Form.Label>{item[1]}</Form.Label>
+                            <Form.Control value={customFieldsValue.text[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, text: {...state.text, [item[0]]: e.target.value}}))} type="text" className="collection-modal-input" required/>
+                        </div>
+                    )}
+                    {stringNames.map((item) => 
+                        <div key={item}>
+                            <Form.Label>{item[1]}</Form.Label>
+                            <Form.Control value={customFieldsValue.string[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, string: {...state.string, [item[0]]: e.target.value}}))} as='textarea' className="collection-modal-input" required/>
+                        </div>
+                    )}
+                    {dateNames.map((item) => 
+                        <div key={item}>
+                            <Form.Label>{item[1]}</Form.Label>
+                            <Form.Control value={customFieldsValue.date[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, date: {...state.date, [item[0]]: e.target.value}}))} type="date" className="collection-modal-input" required/>
+                        </div>
+                    )}
+                    {boolNames.map((item) => 
+                        <div key={item} className="d-flex">
+                            <Form.Label>{item[1]}</Form.Label>
+                            <Form.Check checked={customFieldsValue.bool[item[0]]} onChange={(e) => setCustomFieldsValue((state) => ({...state, bool: {...state.bool, [item[0]]: e.target.checked}}))} type="switch" style={{marginLeft: "0.6vw", marginTop: "0.1vw"}}/>
+                        </div>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-danger" onClick={closeModal}>Close</Button>
+                    <Button variant="outline-success" type="submit"> {isModify ? "Save" : "Add"}</Button>
+                </Modal.Footer>
+            </Form>
         </Modal>
     );
 };

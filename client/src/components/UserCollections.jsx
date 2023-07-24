@@ -19,11 +19,11 @@ const UserCollections = observer(() => {
     }, [id, modalVisisble]);
 
     return (
-        <Container className="d-flex profile-container">
-            <Button className="btn btn-outline-dark add-collection-btn" onClick={() => setModalVisible(true)}>Create new collection</Button>
+        <Container className="d-flex profile-container flex-column">
+            <Button className="add-user-collection-btn" variant="outline-dark" onClick={() => setModalVisible(true)}>Create new collection</Button>
             <Row className="collections-wrapper">
                 {collection.userCollections.map((collection) => 
-                    <Collection key={collection.id} collection={collection}/>
+                    <Collection key={collection.id} item={collection}/>
                 )}
             </Row>
             <NewCollectionModal show={modalVisisble} onHide={() => setModalVisible(false)} userId={id}/>

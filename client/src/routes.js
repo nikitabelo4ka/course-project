@@ -1,9 +1,9 @@
 import {ADMIN_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, MAIN_ROUTE, PROFILE_ROUTE, COLLECTION_ROUTE, USER_COLLECTIONS_ROUTE, COLLECTION_ITEM_ROUTE} from "./utils/consts";
 import Auth from "./components/Auth";
-import Admin from "./components/Admin";
-import Main from "./components/Main";
-import Profile from "./components/Profile";
-import CollectionPage from "./components/CollectionPage";
+import Admin from "./components/Admin/Admin";
+import Main from "./components/Main/Main";
+import Profile from "./components/Profile/Profile";
+import CollectionPage from "./components/CollectionPage/CollectionPage";
 import UserCollections from "./components/UserCollections";
 import CollectionItemPage from "./components/CollectionItemPage";
 

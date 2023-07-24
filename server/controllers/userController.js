@@ -1,5 +1,5 @@
 const apiError = require("../error/apiError");
-const {User} = require("../models/models");
+const {User, Comment, Like, Collection, Item} = require("../models/models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -62,7 +62,7 @@ class userController {
     async getALL(request, response, next) {
 
         try {
-            const users = await User.findAll();
+            const users = await User.findAll({ order: ['id'] });
             return response.json(users);
         } catch (error) {
             next(apiError.badrequest(error.message));
@@ -74,6 +74,11 @@ class userController {
 
         try {
             let {id} = request.query;
+            const comment = await Comment.destroy({where: {userId: id}});
+            const like = await Like.destroy({where: {userId: id}});
+            const collections = await Collection.findAll({where: {userId: id}});
+            collections.forEach(async (collection) => await Item.destroy({where: {collectionId: collection.id}}));
+            const collection = await Collection.destroy({where: {userId: id}});
             const user = await User.destroy({where:{id}});
             return response.json(user);
         } catch (error) {

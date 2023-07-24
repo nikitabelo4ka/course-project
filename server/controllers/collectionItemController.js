@@ -1,4 +1,4 @@
-const {Item, ItemTag, Tag, Collection, User} = require("../models/models");
+const {Item, ItemTag, Tag, Collection, User, Comment, Like} = require("../models/models");
 const apiError = require("../error/apiError");
 
 class collectionItemController {
@@ -48,7 +48,9 @@ class collectionItemController {
 
         try {
             let {id} = request.query;
-            const collectionItem = await Item.destroy({where:{id}}); 
+            const comment = await Comment.destroy({where: {itemId: id}});
+            const like = await Like.destroy({where: {itemId: id}});
+            const collectionItem = await Item.destroy({where: {id}}); 
             return response.json(collectionItem);
         } catch (error) {
             next(apiError.badrequest(error.message));
