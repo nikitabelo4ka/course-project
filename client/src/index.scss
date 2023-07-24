@@ -1,47 +1,57 @@
-:root[data-theme="light"] {
-    --background-color: #ffffff;
-    --navbarbackground-color: #000000;
-    --color: #000000;
-    --modaltext-color: #000000;
+:root[data-theme='light'] {
+  --background-color: #ffffff;
+  --navbarbackground-color: #000000;
+  --color: #000000;
+  --modaltext-color: #000000;
 }
-  
-:root[data-theme="dark"] {
-    --background-color: #000000d1;
-    --navbarbackground-color: #616161;
-    --color: #ffffff;
-    --itembackground-color: #616161;
-    --modaltext-color: #000000;
+
+:root[data-theme='dark'] {
+  --background-color: #000000d1;
+  --navbarbackground-color: #616161;
+  --color: #ffffff;
+  --itembackground-color: #616161;
+  --modaltext-color: #000000;
 }
-  
+
 body {
-    background: var(--background-color);
-    color: var(--color);
+  background: var(--background-color);
+  color: var(--color);
 }
 
 .navbar {
-    background: var(--navbarbackground-color);
+  background: var(--navbarbackground-color);
 }
 
-.collection-item, .tag, .auth-form, .auth-form > h2,a, .thead-dark > tr > th{
-    background: var(--itembackground-color);
+.collection-item,
+.tag,
+.auth-form,
+.auth-form > h2,
+a,
+.thead-dark > tr > th {
+  background: var(--itembackground-color);
 }
 
 .tags-cloud {
-    background: var(--itembackground-color);
+  background: var(--itembackground-color);
 }
 
 .btn-outline-success {
-    border-color: var(--color);
+  border-color: var(--color);
 }
 
-.thead-dark > tr > th, .theme-label, .auth-form > h2,a, .modal-dialog > div, .btn-outline-success {
-    color: var(--color);
+.thead-dark > tr > th,
+.theme-label,
+.auth-form > h2,
+a,
+.modal-dialog > div,
+.btn-outline-success {
+  color: var(--color);
 }
 
 .modal-dialog > div {
-    background: var(--background-color);
+  background: var(--background-color);
 }
 
 .rti--tag {
-    color: var(--modaltext-color);
+  color: var(--modaltext-color);
 }

@@ -1,27 +1,25 @@
-import {makeAutoObservable} from "mobx";
+import { makeAutoObservable } from 'mobx';
 
 export default class CollectionItemsStore {
+  constructor() {
+    this._collectionItems = [];
+    this._allItems = [];
+    makeAutoObservable(this);
+  }
 
-    constructor() {
-        this._collectionItems = []
-        this._allItems = []
-        makeAutoObservable(this)
-    }
+  setCollectionItems(collectionItems) {
+    this._collectionItems = collectionItems;
+  }
 
-    setCollectionItems(collectionItems) {
-        this._collectionItems = collectionItems
-    }
+  setAllItems(items) {
+    this._allItems = items;
+  }
 
-    setAllItems(items) {
-        this._allItems = items
-    }
+  get collectionItems() {
+    return this._collectionItems;
+  }
 
-    get collectionItems() {
-        return this._collectionItems
-    }
-
-    get allItems() {
-        return this._allItems
-    }
-    
+  get allItems() {
+    return this._allItems;
+  }
 }

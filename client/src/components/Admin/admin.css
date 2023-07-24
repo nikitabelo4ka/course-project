@@ -1,39 +1,40 @@
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 .admin-table {
-    width: 70vw;
-    border: 1px solid black;
-    margin: 100px auto 0;
-    font-size: 1vw;
+  width: 70vw;
+  border: 1px solid black;
+  margin: 100px auto 0;
+  font-size: 1vw;
 }
 
 .add-user-collection-btn {
-    width: 20vw;
-    font-size: 1vw;
-    margin: 40px auto 0;
+  width: 20vw;
+  font-size: 1vw;
+  margin: 40px auto 0;
 }
 
 .admin-btn {
-    font-size: 1vw;
+  font-size: 1vw;
 }
 
 @media screen and (max-width: 800px) {
+  .admin-table {
+    width: 90vw;
+  }
 
-    .admin-table {
-        width: 90vw;
-    }
-    
-    .admin-btn, .add-user-collection-btn, .admin-table {
-        font-size: 1.5vw;
-    }
+  .admin-btn,
+  .add-user-collection-btn,
+  .admin-table {
+    font-size: 1.5vw;
+  }
 }
 
 @media screen and (max-width: 540px) {
-
-    .admin-table, .admin-btn, .add-user-collection-btn {
-        font-size: 2vw;
-    }
-
+  .admin-table,
+  .admin-btn,
+  .add-user-collection-btn {
+    font-size: 2vw;
+  }
 }

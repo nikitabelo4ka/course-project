@@ -1,16 +1,16 @@
-import {$authHost} from "./index";
+import { $authHost } from './index';
 
 export const fetchTags = async () => {
-    const {data} = await $authHost.get('api/tags');
-    return data;
+  const { data } = await $authHost.get('api/tags');
+  return data;
 };
 
 export const fetchPopularTags = async () => {
-    const {data} = await $authHost.get('api/tags/popular');
-    return data;
+  const { data } = await $authHost.get('api/tags/popular');
+  return data;
 };
 
 export const fetchAllItemTags = async (itemId) => {
-    const {data} = await $authHost.get('api/tags/itemTags/' + itemId);
-    return data;
+  const { data } = await $authHost.get('api/tags/itemTags/' + itemId);
+  return data;
 };
